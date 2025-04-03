@@ -1,12 +1,11 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:newsreadera/config/colors.dart';
+import 'package:get/get.dart';
+import 'package:newsreadera/controller/newsController.dart';
+import 'package:newsreadera/screen/DetailedNews/newsDetails.dart';
 import 'package:newsreadera/screen/Home/widgets/newsCard.dart';
 import 'package:newsreadera/screen/Home/widgets/newstile.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:get/get.dart';
-
-import '../../main.dart';
+import 'package:newsreadera/screen/Search/searchScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,25 +15,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var isdark = false;
   // ThemeMode themeMode = ThemeMode.light;
+  NewsController newsController = Get.put(NewsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(() => const SearchScreen());
+              },
+              icon: const Icon(Icons.search_rounded)),
           // IconButton(
-          //     onPressed: () {
-          //       setState(() {
-          //         themeMode = themeMode == ThemeMode.light
-          //             ? ThemeMode.dark
-          //             : ThemeMode.light;
-          //       });
-          //     },
-          //     icon: isdark
-          //         ? const Icon(Icons.light_mode_outlined)
-          //         : const Icon(Icons.dark_mode_outlined))
+          //   onPressed: () {
+          //     Get.changeThemeMode(
+          //         Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+          //   },
+          //   icon: Get.isDarkMode
+          //       ? const Icon(Icons.light_mode_outlined)
+          //       : const Icon(Icons.dark_mode_outlined),
+          // )
         ],
         title: Text(
           'News Reader',
@@ -45,7 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
         animatedIcon: AnimatedIcons.menu_close,
         children: [
           SpeedDialChild(child: Icon(Icons.home_rounded)),
-          SpeedDialChild(child: Icon(Icons.settings)),
+          SpeedDialChild(
+              child: Get.isDarkMode
+                  ? const Icon(Icons.light_mode_outlined)
+                  : const Icon(Icons.dark_mode_outlined),
+              onTap: () {
+                Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+              }),
         ],
       ),
       body: Padding(
@@ -68,40 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 20,
             ),
-            // Row(
-            //   children: [
-            //     NewsCard(
-            //         imageUrl: 'imageUrl',
-            //         tag: 'tag',
-            //         time: '10:33',
-            //         title: 'hello',
-            //         author: 'dff',
-            //         ontap: () {}),
-            //     NewsCard(
-            //         imageUrl: 'imageUrl',
-            //         tag: 'tag',
-            //         time: '10:33',
-            //         title: 'hello',
-            //         author: 'dff',
-            //         ontap: () {})
-            //   ],
-            // )
-            SizedBox(
-              height: 340,
-              child: ListView.builder(
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return NewsCard(
-                        imageUrl:
-                            'https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=',
-                        tag: 'tag',
-                        time: '10:33',
-                        title: 'hello',
-                        author: 'dff',
-                        ontap: () {});
-                  }),
-            ),
+            SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                  () => Row(
+                    children: newsController.hotNewsList
+                        .map((e) => NewsCard(
+                              imageUrl: e.urlToImage!,
+                              tag: 'HotNo 1',
+                              time: e.publishedAt!,
+                              title: e.title!,
+                              author: e.author ?? 'Unknown',
+                              ontap: () {
+                                Get.to(() => NewsDetailsScreen(comp: e));
+                              },
+                            ))
+                        .toList(),
+                  ),
+                ))
+
+            // SizedBox(
+            //   height: 340,
+            //   child: ListView.builder(
+            //       itemCount: 5,
+            //       scrollDirection: Axis.horizontal,
+            //       itemBuilder: (context, index) {
+            //         return NewsCard(
+            //             imageUrl:
+            //                 'https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=',
+            //             tag: 'tag',
+            //             time: '10:33',
+            //             title: 'hello',
+            //             author: 'dff',
+            //             ontap: () {
+            //               Get.to(() => const NewsDetailsScreen());
+            //             });
+            //       }),
+            // ),
+            ,
             const SizedBox(
               height: 20,
             ),
@@ -121,22 +134,22 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: 300,
-              child: Expanded(
-                child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return NewsTile(
-                          imageUrl:
-                              'https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=',
-                          title: 'title',
-                          time: 'time',
-                          author: 'author',
-                          ontap: () {});
-                    }),
-              ),
-            )
+            Obx(() => Column(
+                  children: newsController.newsForYouList
+                      .map(
+                        (e) => NewsTile(
+                          ontap: () {
+                            Get.to(() => NewsDetailsScreen(comp: e));
+                          },
+                          imageUrl: e.urlToImage ??
+                              "https://cdn.pixabay.com/photo/2016/02/01/00/56/news-1172463_1280.jpg",
+                          title: e.title!,
+                          author: e.author ?? 'Unknown',
+                          time: e.publishedAt!,
+                        ),
+                      )
+                      .toList(),
+                ))
           ],
         ),
       ),

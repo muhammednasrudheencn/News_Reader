@@ -9,5 +9,5 @@ const lightLableColor = Color(0xff8E8E8E);
 const darkBgColor = Color(0xff191B28);
 const darkFontColor = Color(0xffFFFFFF);
 const darkDivColor = Color(0xff34374B);
-const darkPrimaryColor = Color(0xffFF9900);
+const darkPrimaryColor = Color.fromARGB(255, 0, 255, 242);
 const darkLableColor = Color(0xff9E9E9E);

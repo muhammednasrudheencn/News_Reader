@@ -29,7 +29,7 @@ class NewsTile extends StatelessWidget {
           children: [
             Container(
               width: 120,
-              height: 120,
+              height: 100,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.circular(20),

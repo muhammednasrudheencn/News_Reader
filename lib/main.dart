@@ -7,17 +7,30 @@ void main() {
   runApp(const NewsReadera());
 }
 
-class NewsReadera extends StatelessWidget {
+class NewsReadera extends StatefulWidget {
   const NewsReadera({super.key});
 
+  @override
+  State<NewsReadera> createState() => _NewsReaderaState();
+}
+
+class _NewsReaderaState extends State<NewsReadera> {
   // This widget is the root of your application.
+  bool isDarkMode = false; // Boolean to track theme state
+
+  void toggleTheme() {
+    setState(() {
+      isDarkMode = !isDarkMode; // Toggle theme
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'News Reader',
       theme: lightTheme,
-      themeMode: ThemeMode.system,
+      themeMode: isDarkMode ? ThemeMode.light : ThemeMode.dark,
       darkTheme: darkTheme,
       home: const HomeScreen(),
     );
