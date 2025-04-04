@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:newsreadera/config/colors.dart';
 
 class NewsTile extends StatelessWidget {
   final String imageUrl;
@@ -52,8 +54,22 @@ class NewsTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        radius: 12,
+                        backgroundColor: Get.isDarkMode
+                            ? lightPrimaryColor
+                            : darkPrimaryColor,
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          child: Text(
+                            author[0],
+                            style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Flexible(

@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:newsreadera/config/colors.dart';
 
 class NewsCard extends StatelessWidget {
   final String imageUrl;
@@ -78,13 +81,18 @@ class NewsCard extends StatelessWidget {
             children: [
               const SizedBox(width: 10),
               CircleAvatar(
-                radius: 15,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: Text(
-                  author[0],
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                radius: 17,
+                backgroundColor:
+                    Get.isDarkMode ? lightPrimaryColor : darkPrimaryColor,
+                child: CircleAvatar(
+                  radius: 15,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: Text(
+                    author[0],
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
