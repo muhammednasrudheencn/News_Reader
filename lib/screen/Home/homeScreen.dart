@@ -15,12 +15,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 Future<void> pullToRefresh() async {
-  return Future.delayed(const Duration(seconds: 2));
+  // return Future.delayed(const Duration(seconds: 2));
+  await Future.wait([
+    newsController.getHotNews(),
+    newsController.getNewsForYou(),
+    newsController.getAppleNewsForYou(),
+  ]);
 }
+
+NewsController newsController = Get.put(NewsController());
 
 class _HomeScreenState extends State<HomeScreen> {
   // ThemeMode themeMode = ThemeMode.light;
-  NewsController newsController = Get.put(NewsController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         children: [
-          SpeedDialChild(child: Icon(Icons.home_rounded)),
+          SpeedDialChild(child: const Icon(Icons.home_rounded)),
           SpeedDialChild(
               child: Get.isDarkMode
                   ? const Icon(Icons.light_mode_outlined)
@@ -87,9 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Obx(
                     () => newsController.isHotNewsLoading.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
+                        ? const NewsCardRefresh()
                         : Row(
                             children: newsController.hotNewsList
                                 .map((e) => NewsCard(
@@ -146,9 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 20,
               ),
               Obx(() => newsController.isNewsForYouLoading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? const NewsTileRefresh()
                   : Column(
                       children: newsController.newsForYou5List
                           .map(
@@ -166,9 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .toList(),
                     )),
               Obx(() => newsController.isAppleNewsLoading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? const SizedBox()
                   : Column(
                       children: newsController.appleNews5List
                           .map(

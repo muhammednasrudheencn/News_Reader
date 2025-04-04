@@ -26,7 +26,7 @@ class NewsCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(right: 10),
         padding: const EdgeInsets.all(5),
-        // height: 300,
+        // height: 380,
         width: 290,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -107,6 +107,20 @@ class NewsCard extends StatelessWidget {
           const SizedBox(height: 10),
         ]),
       ),
+    );
+  }
+}
+
+class NewsCardRefresh extends StatelessWidget {
+  const NewsCardRefresh({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 250,
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      child: const CircularProgressIndicator(),
     );
   }
 }

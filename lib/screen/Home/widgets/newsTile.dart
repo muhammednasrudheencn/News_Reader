@@ -98,3 +98,17 @@ class NewsTile extends StatelessWidget {
     );
   }
 }
+
+class NewsTileRefresh extends StatelessWidget {
+  const NewsTileRefresh({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 150,
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      child: const CircularProgressIndicator(),
+    );
+  }
+}

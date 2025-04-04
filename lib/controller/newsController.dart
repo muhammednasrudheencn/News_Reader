@@ -10,10 +10,12 @@ class NewsController extends GetxController {
   RxList<NewsModel> newsForYou5List = <NewsModel>[].obs;
   RxList<NewsModel> appleNewsList = <NewsModel>[].obs;
   RxList<NewsModel> appleNews5List = <NewsModel>[].obs;
+  RxList<NewsModel> searchNewsList = <NewsModel>[].obs;
 
   RxBool isHotNewsLoading = false.obs;
   RxBool isNewsForYouLoading = false.obs;
   RxBool isAppleNewsLoading = false.obs;
+  RxBool isSearchNewsLoading = false.obs;
 
   void onInit() async {
     super.onInit();
@@ -90,6 +92,33 @@ class NewsController extends GetxController {
       print(ex);
     }
     isAppleNewsLoading.value = false;
+  }
+
+  Future<void> getSearchNews() async {
+    isSearchNewsLoading.value = true;
+    var hotUri =
+        "https://newsapi.org/v2/everything?q=Latest&apiKey=313861df7e844165b44994cfbab834e6";
+
+    try {
+      var response = await http.get(Uri.parse(hotUri));
+      if (response.statusCode == 200) {
+        var body = jsonDecode(response.body);
+        var articals = body["articles"];
+        int newsCount = 0;
+        for (var news in articals) {
+          newsCount++;
+          searchNewsList.add(NewsModel.fromJson(news));
+          if (newsCount == 15) {
+            break;
+          }
+        }
+      } else {
+        print("Something went Wrong in Tranding News");
+      }
+    } catch (ex) {
+      print(ex);
+    }
+    isSearchNewsLoading.value = false;
   }
 
   Future<void> searchNews(String value) async {
