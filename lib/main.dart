@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newsreadera/config/theme.dart';
-import 'package:newsreadera/screen/Home/homeScreen.dart';
+import 'package:newsreadera/splashScreen.dart';
 
 void main() {
   runApp(const NewsReadera());
@@ -32,7 +32,7 @@ class _NewsReaderaState extends State<NewsReadera> {
       theme: lightTheme,
       themeMode: isDarkMode ? ThemeMode.light : ThemeMode.dark,
       darkTheme: darkTheme,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

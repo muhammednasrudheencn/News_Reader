@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:newsreadera/models/newsModel.dart';
-import 'package:newsreadera/screen/Home/homeScreen.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
   final NewsModel comp;
@@ -19,7 +18,7 @@ class NewsDetailsScreen extends StatelessWidget {
           SpeedDialChild(
               child: const Icon(Icons.home_rounded),
               onTap: () {
-                Get.to(() => const HomeScreen());
+                Get.back();
               }),
           SpeedDialChild(
               child: Get.isDarkMode

@@ -1,10 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 import 'package:newsreadera/controller/newsController.dart';
 import 'package:newsreadera/screen/DetailedNews/newsDetails.dart';
-import 'package:newsreadera/screen/Home/homeScreen.dart';
 import 'package:newsreadera/screen/Search/Widget/searchwidget.dart';
 
 import '../Home/widgets/newsTile.dart';
@@ -38,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
             SpeedDialChild(
               child: const Icon(Icons.home_rounded),
               onTap: () {
-                Get.to(() => const HomeScreen());
+                Get.back();
               },
             ),
             SpeedDialChild(

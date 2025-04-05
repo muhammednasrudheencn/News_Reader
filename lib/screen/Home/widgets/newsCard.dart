@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newsreadera/config/colors.dart';
@@ -39,13 +38,17 @@ class NewsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: Theme.of(context).colorScheme.background,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: imageUrl.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
           const SizedBox(height: 10),
           Row(

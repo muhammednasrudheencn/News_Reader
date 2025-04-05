@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:newsreadera/models/newsModel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +57,8 @@ class NewsController extends GetxController {
         print(response.body);
         var body = jsonDecode(response.body);
         var articals = body["articles"];
+        searchNewsList.clear();
+        newsForYouList.clear();
         for (var news in articals) {
           newsForYouList.add(NewsModel.fromJson(news));
         }
